@@ -1,11 +1,13 @@
 package com.liming.spider.controller;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.liming.spider.service.QueryService;
 import com.liming.spider.service.RobotsExclusionService;
 import com.liming.spider.service.SpiderService;
 
@@ -15,16 +17,11 @@ import com.liming.spider.service.SpiderService;
 @EnableAutoConfiguration
 @RequestMapping("/spider")
 public class SpiderController {
-	private static Logger logger = Logger.getLogger(SpiderController.class);
-
-	@RequestMapping("/hi")
-	public String sayHi() {
-		return "hi, can i help you.";
-	}
-
+	private static Logger logger = LoggerFactory.getLogger(SpiderController.class);
+	  
 	@RequestMapping("")
 	public String indexPage() {
-		return "this is liming's spring boot Demo";
+		return "this is liming's spring boot Demo, you can request /readRobotsExclusions , and then request to crawl website html through /crawl";
 	}
 	@RequestMapping("/crawl")
 	public String crawl() {
@@ -34,7 +31,7 @@ public class SpiderController {
 	
 	@RequestMapping("/queryRecords")
 	public String queryRecords() {
-		return "the spider has been crawling";
+		return new QueryService().showAllOfPages();
 	}
 	
 	@RequestMapping("/readRobotsExclusions")
